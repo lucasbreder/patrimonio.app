@@ -7,6 +7,11 @@ export default function Nav() {
 
     const navContainer = useRef()
 
+    function showTitle(target) {
+        const title = target.querySelector('div')
+        title.classList.toggle('activeTitle')
+    }
+
     return (
         <Navigation ref={navContainer}>
             <NavigationMobileButton onClick={() => {navContainer.current.classList.toggle('active')}}/>
@@ -17,6 +22,7 @@ export default function Nav() {
                         return (
                             <NavItem icon={item.icon} onClick={() => { navContainer.current.classList.toggle('active') }} key={index}>
                                 <Link href={'/list' + item.path}><a></a></Link>
+                                <HoverTitle>{item.title}</HoverTitle>
                             </NavItem>
                         )
                     })
@@ -140,4 +146,19 @@ const SiteTitle = styled.div`
     font-size: 1.6rem;
     margin-bottom: .5rem;
     height: auto;
+`
+
+const HoverTitle = styled.div`
+    position: absolute;
+    top: 0;
+    left: 115%;
+    background-color: #f2f2f2;
+    padding: .5rem;
+    border-radius: 15px;
+    width: 200px;
+    display: none;
+
+    &.activeTitle {
+        display: block;
+    }
 `
