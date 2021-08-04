@@ -14,9 +14,18 @@ export default function Check({ locals }) {
     const [materials, setMaterials] = useState([])
     const [validation, setValidation] = useState([])
     const checks = useRef()
+    const sublocalsRef = useRef()
+    const localsRef = useRef()
     
     async function getSubLocals(id, target) {
         setSubLocals([])
+
+        const localsItens = localsRef.current.querySelectorAll('div')
+
+        localsItens.forEach((item) => {
+            item.classList.remove('active')
+        })
+
         const cookies = nookies.get()
 
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API}local/${id}/sublocals`, {
@@ -34,6 +43,12 @@ export default function Check({ locals }) {
     async function getMaterials(id, target) {
 
         setMaterials([])
+
+        const sublocalsItens = sublocalsRef.current.querySelectorAll('div')
+
+        sublocalsItens.forEach((item) => {
+            item.classList.remove('active')
+        })
 
         const cookies = nookies.get()
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API}sublocals/${id}/materials`, {
@@ -69,7 +84,6 @@ export default function Check({ locals }) {
               } catch (ex) {
                 if (ex.response && ex.response.status === 422) {
                     const errors = ex.response.data.errors;
-                    console.log(errors)
                     setValidation(errors)
                   }
               }
@@ -83,14 +97,14 @@ export default function Check({ locals }) {
         <Section>
             <Title text="Checagem" />
             <ColumnsContainer>
-            <Column>
+            <Column ref={localsRef}>
             {
             locals.map((local) => {
                 return <Item onClick={(event) => {getSubLocals(local.id, event.target)}}>{local.name}</Item>
             })
             }
             </Column>
-            <Column>
+            <Column ref={sublocalsRef}>
             {
             sublocals.map((sublocal) => {
                 return <Item onClick={(event) => {getMaterials(sublocal.id, event.target)}}>{sublocal.name}</Item>
@@ -109,7 +123,8 @@ export default function Check({ locals }) {
                                     <MaterialTitle>
                                         <span>{material.baseMaterial.name}</span>
                                         <Switch name="checked" />
-                                    </MaterialTitle>
+                                        </MaterialTitle>
+                                        <p>Observações</p>
                                     <textarea name="description"></textarea>
                                     <input type="hidden" value={material.id} name="material_id" />
                                     
@@ -183,6 +198,8 @@ const CheckForm = styled.form`
         text-align: center;
         width: 100%;
     }
+    p {
+        margin-bottom: .5rem;
     }
 `
 const MaterialContainer = styled.div`
@@ -202,6 +219,7 @@ const MaterialTitle = styled.h2`
 `
 const MaterialInputs = styled.div`
     flex-basis: 20%;
+    padding-right: 2rem;
 
     input, textarea, select {
         ${Input}
@@ -218,4 +236,6 @@ const MaterialOrientation = styled.div`
 const SaveCheck = styled.div`
     ${ButtonStyle}
     background-color: ${props => props.theme.featureColor2};
+    margin: 1rem 0;
+    width: 200px;
 `

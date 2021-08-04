@@ -41,11 +41,11 @@ cursor: pointer;
     height: 2rem;
     position: absolute;
     top: 0;
-    right: 0;
+    left: 0;
     transition: all .5s;
 }
 &.activeSwitch::before {
     background-color: ${props => props.theme.featureColor2};
-    transform: translateX(-100%);
+    transform: translateX(100%);
 }
 `
