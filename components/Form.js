@@ -15,7 +15,7 @@ import { parseCookies } from 'nookies'
 
 
 export default function Form({ api, fields, data, type = "" }) {
-    
+    console.log(data)
     const [status, setStatus] = useState()
     const [validation, setValidation] = useState()
     const router = useRouter()

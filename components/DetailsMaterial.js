@@ -9,7 +9,6 @@ import ListTools from "./ListTools"
 import Button from "./Button"
 
 export default function DetailsMaterial({ data }) {
-
     const [content] = useState(data)
     const path = useRouter()
 
