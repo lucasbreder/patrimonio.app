@@ -4,21 +4,24 @@ import Section from './Section'
 import Title from './Title'
 import Head from 'next/head'
 import stringTranslate from '../helpers/stringTranslate'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import ListTools from './ListTools'
 import { useRouter } from 'next/router'
+import filterSet from '../helpers/filterSet'
+import { useState } from 'react/cjs/react.development'
+import FilterTools from './FilterTools'
 
 export default function ListBox({ data, slug }) {
-    console.log(data)
     const router = useRouter()
-    const itens = data.length >= 0 ? data : [data]
 
-    useEffect(() => {
+    const [itensFiltered, setItensFiltered] = useState()
 
-    })
+    const elements = itensFiltered ? itensFiltered : data.length >= 0 ? data : [data]
 
-    if (itens.length > 0) {
+    const parentItem = useRef(null)
+
+    if (data) {
         return (
             <Section>
                 <Head>
@@ -26,14 +29,15 @@ export default function ListBox({ data, slug }) {
                 </Head>
                 <Title text={slug} />
                 <Button type='new' link={`/create/${slug}`} label='Adicionar' />
+                <FilterTools setItensFiltered={setItensFiltered} api={process.env.NEXT_PUBLIC_API + slug} filterSet={filterSet(slug)} />
                 <ListBoxContainer>
-                    {itens.map((item) => {
+                    {elements.map((item, index) => {
                         return (
-                            <ListBoxItem>
-                                <Link href={`/edit/${slug}/${item.id}`}>{item[Object.keys(itens[0])[1]]}</Link>
-                                <Additionalnfo>{router.query.slug === 'sublocals' && item.local.name}</Additionalnfo>
+                            <ListBoxItem key={index} ref={parentItem}>
+                                <Link href={`/edit/${slug}/${item.id}`}>{item[Object.keys(data[0])[1]]}</Link>
+                                <Additionalnfo>{(router.query.slug === 'sublocals' && item.local) && item.local.name}</Additionalnfo>
                                 <ToolsBox>
-                                    <ListTools id={item.id} />
+                                    <ListTools id={item.id} parent={parentItem} />
                                 </ToolsBox>
                             </ListBoxItem>
                         )
@@ -89,6 +93,7 @@ const Table = styled.table`
 const ListBoxContainer = styled.div`
     display: flex;
     flex-flow: wrap;
+    
 `
 const ListBoxItem = styled.div`
     border: 1px solid #4D4D4D;
@@ -98,6 +103,11 @@ const ListBoxItem = styled.div`
     text-align: center;
     flex-basis: 20%;
     position: relative;
+
+    @media (max-width: ${props => props.theme.mobileBreakPoint}) {
+        flex-basis: 100%;
+        margin: 1rem 0;
+    }
 
     a {
         color: #18669E;

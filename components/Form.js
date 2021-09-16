@@ -116,15 +116,40 @@ export default function Form({ api, fields, data, type = "" }) {
 }
 
 const FormContainer = styled.div`
+    form {
+        display: flex;
+        flex-wrap: wrap;
+    }
     label {
         display: flex;
         flex-direction: column;
-        margin: 1rem 0;
+        margin: .5rem;
+        flex-basis: 100%;
+
+        @media (max-width: ${props => props.theme.mobileBreakPoint}) {
+            flex-basis: calc(100% - 1rem) !important;
+        } 
+    }
+    label.conservation, label.usability {
+        flex-basis: calc(20% - 1rem);
+    }
+    label.status {
+        flex-basis: calc(53% - 1rem);
+    }
+    label.base_material_id, label.local_id, label.sublocal_id {
+        flex-basis: calc(33% - 1rem);
+    }
+    label.identification_number {
+        flex-basis: calc(50% - 1rem);
+    }
+    label.management, label.subitem {
+        flex-basis: calc(25% - 1rem);
     }
     p {
         margin-bottom: .5rem;
         text-transform: capitalize;
         font-size: .9rem;
+        font-weight: bold;
     }
     input, select, textarea {
         border-radius: 10px;
@@ -139,6 +164,7 @@ const FormContainer = styled.div`
             font-size: 1rem;
         }
     }
+
     textarea {
         min-height: 100px;
     }

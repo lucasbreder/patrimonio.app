@@ -12,19 +12,23 @@ import ListTools from './ListTools'
 import Moment from 'react-moment'
 import 'moment-timezone';
 import LoanStatus from './LoanStatus'
+import FilterTools from './FilterTools'
+import filterSet from '../helpers/filterSet'
+import dateFilterSet from '../helpers/dateFilterSet'
+import TableColumnTitleMobile from './table/TableColumnTitleMobile'
 
 export default function ListLoan({ data, slug }) {
 
     const headers = ['Título', 'Origem > Destino', 'Responsável', 'Devolução', 'Status']
 
-    const itens = data.length >= 0 ? data : [data]
+    const [itensFiltered, setItensFiltered] = useState(data.length >= 0 ? data : [data]) 
     const exclude = process.env.NEXT_PUBLIC_EXCLUDEFROMLIST
 
     useEffect(() => {
 
     })
 
-    if (itens.length > 0) {
+    if (itensFiltered.length > 0) {
         return (
             <Section>
                 <Head>
@@ -32,27 +36,35 @@ export default function ListLoan({ data, slug }) {
                 </Head>
                 <Title text={slug} />
                 <Button type='new' link={`/create/${slug}`} label='Adicionar' />
+                <FilterTools setItensFiltered={setItensFiltered} api={process.env.NEXT_PUBLIC_API + slug} filterSet={filterSet(slug)} dateFilterSet={dateFilterSet(slug)} />
                 <Table length={length}>
                     <TableHeader data={headers} exclude={exclude} />
                     <TableBodyContainer>
                     {
-                        data.map((item, index) => {
+                        itensFiltered.map((item, index) => {
                             return (
                                 
                                 <tr key={index}>
                                     <LoanMaterial>
+                                        <TableColumnTitleMobile title={headers[0]}/>
                                         <LoanMaterialName>{item.material.baseMaterial.name}</LoanMaterialName>
-                                        <LoanMaterialUser>{item.user.registry}</LoanMaterialUser>
+                                        <LoanMaterialUser>{item.material.identification_number}</LoanMaterialUser>
                                     </LoanMaterial>
                                     <LoanUnits>
+                                        <TableColumnTitleMobile title={headers[1]}/>
                                         <LoanUnitOrigin>{item.unit.name}</LoanUnitOrigin>
                                         <LoanUnitDestination>{item.destination_unit.name}</LoanUnitDestination>
                                     </LoanUnits>
-                                    <LoanResponsible>{item.destination_user.registry}</LoanResponsible>
+                                    <LoanResponsible>
+                                        <TableColumnTitleMobile title={headers[2]}/>
+                                        {item.destination_user.registry}
+                                    </LoanResponsible>
                                     <LoanDevolution>
+                                        <TableColumnTitleMobile title={headers[3]}/>
                                         <Moment format="DD/MM/YYYY">{item.devolution_at}</Moment>
                                     </LoanDevolution>
                                     <LoanStatusColumn>
+                                        <TableColumnTitleMobile title={headers[4]}/>
                                         <LoanStatus date={item.devolution_at} status={item.material.status} ></LoanStatus>
                                     </LoanStatusColumn>
                                     <td>
@@ -72,7 +84,8 @@ export default function ListLoan({ data, slug }) {
         return (
             <Section>
                 <Title text={slug} />
-                <Button type='new' link={`/create/${slug}`} label='Adicionar o Primeiro' />
+                <Button type='new' link={`/create/${slug}`} label='Adicionar' />
+                <FilterTools setItensFiltered={setItensFiltered} api={process.env.NEXT_PUBLIC_API + slug} filterSet={filterSet(slug)} dateFilterSet={dateFilterSet(slug)} />
                 <p>Nada Encontrado</p>
             </Section>
 

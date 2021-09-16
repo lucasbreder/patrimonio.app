@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import findValidation from "../../helpers/findValidation"
 import stringTranslate from "../../helpers/stringTranslate"
+import Validation from "../Validation"
 
 export default function Checkbox({ params, data, validation }) {
     
@@ -19,7 +19,7 @@ export default function Checkbox({ params, data, validation }) {
             <p>{stringTranslate(params.name)}</p>
             <input type="checkbox" onChange={() => { handleCheckboxValue() }} checked={value} />
             <input type="hidden" name={params.name} value={value} />
-            <p>{findValidation(validation, params.name)}</p>
+            <Validation validation={validation} name={params.name} />
         </label>
     )
 

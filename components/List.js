@@ -6,19 +6,29 @@ import TableHeader from "./table/TableHeader"
 import Title from './Title'
 import Head from 'next/head'
 import stringTranslate from '../helpers/stringTranslate'
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
+import FilterTools from './FilterTools'
+import filterSet from '../helpers/filterSet'
+import { useRouter } from "next/router";
 
 export default function List({ data, slug }) {
-    const [length, setLenght] = useState()
+    
+    const [itensFiltered, setItensFiltered] = useState()
 
-    const itens = data.length >= 0 ? data : [data]
-    const exclude = process.env.NEXT_PUBLIC_EXCLUDEFROMLIST
+    const router = useRouter()
 
     useEffect(() => {
+        const handleRouteChange = (url) => {
+            setItensFiltered()
+        }
 
-    })
+        router.events.on('routeChangeComplete', handleRouteChange)
 
-    if (itens.length > 0) {
+    }, [itensFiltered])
+    
+
+    const exclude = process.env.NEXT_PUBLIC_EXCLUDEFROMLIST
+
         return (
             <Section>
                 <Head>
@@ -26,26 +36,22 @@ export default function List({ data, slug }) {
                 </Head>
                 <Title text={slug} />
                 <Button type='new' link={`/create/${slug}`} label='Adicionar' />
-                <Table length={length}>
-                    <TableHeader data={itens} exclude={exclude} length={length}/>
-                    <TableBody data={itens} slug={slug} exclude={exclude} length={length}/>
-                </Table>
+                <FilterTools setItensFiltered={setItensFiltered} api={process.env.NEXT_PUBLIC_API + slug} filterSet={filterSet(slug)} />
+                {
+                    itensFiltered || data ?
+                    <Table>
+                        <TableHeader data={data} exclude={exclude} />
+                        <TableBody data={itensFiltered ? itensFiltered : data} slug={slug} exclude={exclude} />
+                    </Table>
+                    :
+                    <p>Nada Encontrado</p>
+                }
+                
             </Section>
         )
-
-    } else {
-        return (
-            <Section>
-                <Title text={slug} />
-                <Button type='new' link={`/create/${slug}`} label='Adicionar o Primeiro' />
-                <p>Nada Encontrado</p>
-            </Section>
-
-        )
-        
+    
         
     }
-}
 
 const Table = styled.table`
     width: 100%;

@@ -28,12 +28,17 @@ export const TextStyle = () => css`
 
 export const Input = () => css`
     border-radius: 10px;
-    padding: 1rem;
+    padding: .7rem;
     border: none;
     border-left: 0 solid ${props => props.theme.featureColor};
     font-family: inherit;
     outline: none;
     transition: all .5s ease-in-out;
+
+    &[name="base_material_id"] {
+        flex-basis: 40%;
+        background-color: yellow;
+    }
 `;
 
 export const SubTitle = () => css`

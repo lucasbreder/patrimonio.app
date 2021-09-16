@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
 import styled from 'styled-components'
-import findValidation from "../../helpers/findValidation";
 
 import Editor, { composeDecorators } from '@draft-js-plugins/editor';
 
@@ -12,7 +11,6 @@ import createResizeablePlugin from '@draft-js-plugins/resizeable';
 import createBlockDndPlugin from '@draft-js-plugins/drag-n-drop';
 import createDragNDropUploadPlugin from '@draft-js-plugins/drag-n-drop-upload';
 import createVideoPlugin from '@draft-js-plugins/video';
-import editorStyles from '../editor/editorStyles.module.css';
 import mockUpload from '../editor/mockUpload';
 
 import '@draft-js-plugins/image/lib/plugin.css'
@@ -21,6 +19,7 @@ import '@draft-js-plugins/alignment/lib/plugin.css'
 import 'draft-js/dist/Draft.css';
 
 import EditorTools from "../editor/EditorTools";
+import Validation from '../Validation';
 
 const focusPlugin = createFocusPlugin();
 const resizeablePlugin = createResizeablePlugin();
@@ -144,7 +143,7 @@ export default class EditorInput extends Component {
             decorators={linkDecorator}
           />
           <AlignmentTool />
-          <p>{findValidation(this.props.validation, this.props.params.name)}</p>
+          <Validation validation={this.props.validation} name={this.props.params.name} />
           <input type='hidden' name={this.props.params.name} value={JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent()))} />  
         </EditorContainer>
       </>

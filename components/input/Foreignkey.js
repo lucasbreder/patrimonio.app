@@ -1,8 +1,8 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import findValidation from "../../helpers/findValidation"
 import stringTranslate from "../../helpers/stringTranslate"
 import { parseCookies } from 'nookies'
+import Validation from "../Validation"
 
 export default function Foreignkey({ params, data, validation }) {
 
@@ -28,7 +28,7 @@ export default function Foreignkey({ params, data, validation }) {
 
     if (query) {
         return (
-            <label>
+            <label className={params.name}>
                 <p>{stringTranslate(params.name)}</p>
                 
                 <select value={value} name={params.many ? params.name+'[]' : params.name} multiple={params.many ? true : false} onChange={(event) => { setValue(event.target.value) }}>
@@ -37,7 +37,7 @@ export default function Foreignkey({ params, data, validation }) {
                         return <option key={index} value={item.id} >{Object.values(item)[1]}</option>
                     })}
                 </select>
-                <p>{findValidation(validation, params.name)}</p>
+                <Validation validation={validation} name={params.name} />
             </label>
         )
     }  else {

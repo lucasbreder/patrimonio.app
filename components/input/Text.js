@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import findValidation from "../../helpers/findValidation"
 import stringTranslate from "../../helpers/stringTranslate"
+import Validation from "../Validation"
 
 export default function Text({ params, data, validation }) {
     
@@ -11,10 +11,10 @@ export default function Text({ params, data, validation }) {
     }, [])
 
     return (
-        <label>
+        <label className={params.name}>
             <p>{stringTranslate(params.name)}</p>
             <input value={value ? value : ""} type="text" name={params.name} required={params.required} onChange={(event) => { setValue(event.target.value) }} />
-            <p>{findValidation(validation, params.name)}</p>
+            <Validation validation={validation} name={params.name} />
         </label>
     )
 

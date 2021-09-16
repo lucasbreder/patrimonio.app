@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import findValidation from "../../helpers/findValidation"
 import stringTranslate from "../../helpers/stringTranslate"
+import Validation from "../Validation"
 
 export default function Select({ params, data, validation }) {
     
@@ -11,7 +11,7 @@ export default function Select({ params, data, validation }) {
     }, [])
 
     return (
-        <label>
+        <label className={params.name}>
             <p>{stringTranslate(params.name)}</p>
             <select value={value} name={params.name} required={params.required} onChange={(event) => { setValue(event.target.value) }}>
                 <option value=""></option>
@@ -21,7 +21,7 @@ export default function Select({ params, data, validation }) {
                     })
                 }
             </select>
-            <p>{findValidation(validation, params.name)}</p>
+            <Validation validation={validation} name={params.name} />
         </label>
     )
 

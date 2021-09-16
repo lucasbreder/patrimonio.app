@@ -8,8 +8,7 @@ export default function Nav() {
     const navContainer = useRef()
 
     function showTitle(target) {
-        const title = target.querySelector('div')
-        title.classList.toggle('activeTitle')
+        
     }
 
     return (
@@ -20,7 +19,7 @@ export default function Nav() {
                 {
                     process.env.NEXT_PUBLIC_ROUTES.map((item, index) => {
                         return (
-                            <NavItem icon={item.icon} onClick={() => { navContainer.current.classList.toggle('active') }} key={index}>
+                            <NavItem icon={item.icon} onMouseEnter={(event) => {showTitle(event.target)}} onClick={() => { navContainer.current.classList.toggle('active') }} key={index}>
                                 <Link href={'/list' + item.path}><a></a></Link>
                                 <HoverTitle>{item.title}</HoverTitle>
                             </NavItem>

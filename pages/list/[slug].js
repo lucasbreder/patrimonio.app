@@ -3,9 +3,10 @@ import List from "../../components/List"
 import nookies from 'nookies'
 import ListBox from "../../components/ListBox"
 import ListLoan from "../../components/ListLoan"
+import { useEffect, useState } from "react"
 
-export default function ListQuery({list, slug}) {
-  
+export default function ListQuery({ list, slug }) {
+
   switch (slug) {
     case 'categories':
       return <ListBox data={list} slug={slug} />
@@ -16,7 +17,7 @@ export default function ListQuery({list, slug}) {
     case 'loans':
       return <ListLoan data={list} slug={slug} />  
     default:
-      return <List data={list} slug={slug} />
+      return <List data={list} slug={slug}/>
   }
 
 }

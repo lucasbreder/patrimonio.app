@@ -2,11 +2,11 @@ import styled from "styled-components";
 import Delete from "./Delete";
 import EditButton from "./EditButton";
 
-export default function ListTools({id}) {
+export default function ListTools({ id, parent }) {
     return (
         <ToolsContainer>
             <EditButton id={id}/>
-            <Delete id={id} />
+            <Delete id={id} parent={parent} />
         </ToolsContainer>
     )
 }

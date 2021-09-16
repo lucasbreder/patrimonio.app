@@ -9,17 +9,18 @@ import TableColumnForeignkey from "./TableColumnForeignkey"
 import TableColumnBoolean from "./TableColumnBoolean"
 import TableColumnGallery from "./TableColumnGallery"
 import ListTools from "../ListTools"
+import { useRef } from "react"
 
-export default function TableBody({ data, slug, exclude, length }) {
+export default function TableBody({ data, slug, exclude }) {
     const path = useRouter();
+    const parentItem = useRef(null)
 
     return (
-        <TableBodyContainer length={length}>
+        <TableBodyContainer>
             {data.map((item, index) => {
 
             return (
-                <tr key={index}>
-                     
+                <tr key={index} ref={parentItem}> 
                 {Object.keys(item).map(
                     (item, innerIndex) => {
                         if (!exclude.includes(item)) {
@@ -27,7 +28,7 @@ export default function TableBody({ data, slug, exclude, length }) {
                             return <TableColumnForeignkey title={item} slug={item} key={innerIndex} data={data[index][item]} />
                         } else if (varType(data[index][item]) === 'object') {
                             if (item === 'pictures') {
-                                return <TableColumnGallery data={data[index][item]} />
+                                return <TableColumnGallery data={data[index][item]} key={innerIndex}/>
                             } else {
                                 return <TableColumnObject title={item} slug={item} key={innerIndex} data={data[index][item]} />
                             }
@@ -39,11 +40,11 @@ export default function TableBody({ data, slug, exclude, length }) {
                         } else if (process.env.NEXT_PUBLIC_BOOLEANLIST.includes(item)) {
                             return <TableColumnBoolean title={item} key={innerIndex} slug={slug} data={data[index][item]} />
                         } else {
-                            return <TableColumnString title={item} link={`/details/${path.query.slug}/${data[index].id}`} key={innerIndex} data={data[index][item]} />
+                            return <TableColumnString title={item} link={slug === 'users' ? `/edit/${path.query.slug}/${data[index].id}` :`/details/${path.query.slug}/${data[index].id}`} key={innerIndex} data={data[index][item]} />
                         }
                     }
                     })}
-                    <td><ListTools id={item.id}/></td>
+                    <td>{parentItem && <ListTools id={item.id} parent={parentItem} />}</td>
                 </tr>
             )
             
@@ -93,13 +94,13 @@ const TableBodyContainer = styled.tbody`
     tr td {
         background-color: ${props => props.theme.tableBackgroundColor};
         transition: all .3s;
-        ${props => props.length > 10 ? "padding: 1rem 2rem;" : ""}
-        flex: ${props => props.length > 10 ? "auto" : "1 1 0 "};
+        flex: 1 1 0;
+        word-break: break-all;
     }
     tr:hover td {
         background-color: ${props => props.theme.backgroundColor};
     }
     span {
-        display: ${props => props.length > 10 ? "block" : "auto"};
+        display: auto;
     }
 `

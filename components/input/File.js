@@ -2,7 +2,7 @@ import { useRouter } from "next/router"
 import { useEffect, useState, useRef } from "react"
 import stringTranslate from "../../helpers/stringTranslate"
 import styled from 'styled-components'
-import findValidation from "../../helpers/findValidation"
+import Validation from "../Validation"
 
 export default function File({ params, data, validation }) {
     const path = useRouter()
@@ -44,7 +44,7 @@ export default function File({ params, data, validation }) {
                 </ImgContainer>
                 
             </FileInputContainer>
-            <p>{findValidation(validation, params.name)}</p>
+            <Validation validation={validation} name={params.name} />
         </>
     )
 }

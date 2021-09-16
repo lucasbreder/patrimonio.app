@@ -11,6 +11,7 @@ export default function Title({ text, variant }) {
 
 const TitleContainer = styled.section`
     font-size: 2rem;
-    font-weight: bold;
+    font-weight: 800;
     text-transform: capitalize;
+    margin-bottom: 2rem;
 `

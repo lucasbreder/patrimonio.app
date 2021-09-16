@@ -11,6 +11,10 @@ export default function Home() {
 
 const Dashboard = styled.div`
   padding: 15rem;
+
+  @media (max-width: ${props => props.theme.mobileBreakPoint}) {
+    padding: 2rem;
+  }
 `
 
 const Title = styled.h1`
@@ -24,4 +28,9 @@ background-image: linear-gradient(45deg, ${props => props.theme.gradientColor1},
   text-align: center;
   width: 40%;
   margin: 0 auto;
+
+      @media (max-width: ${props => props.theme.mobileBreakPoint}) {
+        width: 80%;
+        font-size: 1.5rem;
+    } 
 `

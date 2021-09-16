@@ -2,12 +2,12 @@ import { useState } from 'react'
 import styled from 'styled-components'
 import stringTranslate from '../../helpers/stringTranslate'
 
-export default function TableHeader({ data, exclude, length, }) {
+export default function TableHeader({ data, exclude }) {
 
     const [headers] = useState(Object.keys(data[0])[0] !== "0" ? Object.keys(data[0]) : data)
     
     return (
-        <TableHeaderContainer length={length}>
+        <TableHeaderContainer>
             <tr>
             {headers.map(
                 (item, index) => {
@@ -35,11 +35,10 @@ const TableHeaderContainer = styled.thead`
         display: flex;
         flex-basis: 100%;
         justify-content: space-between;
-        ${props => props.length > 10 ? "display:none;" : ""}
 
         @media (max-width: ${props => props.theme.mobileBreakPoint}) {
             flex-flow: column;
-            display: none;
+            display: none !important;
         }  
 
     }

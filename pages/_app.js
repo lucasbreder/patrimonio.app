@@ -30,8 +30,9 @@ function MyApp({ Component, pageProps }) {
       <ThemeProvider theme={theme.light}>
         <Head>
           <meta charSet="utf-8" />
-          <link rel="preconnect" href="https://fonts.gstatic.com"/>
-          <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;700;900&display=swap" rel="stylesheet" />
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" />
+          <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;700;800&display=swap" rel="stylesheet" />
           <title>{process.env.NEXT_PUBLIC_NAME}</title>
         </Head>
       <Access>
@@ -96,7 +97,7 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
   color: #707070;
-  font-family: 'Roboto';
+  font-family: 'Urbanist';
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 

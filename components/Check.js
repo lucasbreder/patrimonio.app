@@ -114,9 +114,9 @@ export default function Check({ locals }) {
                 <Column ref={checks}>
                    
                     {
-                    materials.map((material) => {
+                    materials.map((material, index) => {
                         return (
-                            <CheckForm>
+                            <CheckForm key={index}>
                             <MaterialContainer>
                                 
                                 <MaterialInputs>
@@ -146,6 +146,10 @@ export default function Check({ locals }) {
 const ColumnsContainer = styled.div`
     display: flex;
     margin-top: 3rem;
+
+    @media (max-width: ${props => props.theme.mobileBreakPoint}) {
+        flex-direction: column;
+    }  
 `
 const Column = styled.div`
     padding: 0 3rem;
@@ -206,6 +210,12 @@ const MaterialContainer = styled.div`
     margin-bottom: 2rem;
     display: flex;
     justify-content: flex-start;
+
+    @media (max-width: ${props => props.theme.mobileBreakPoint}) {
+        flex-direction: column;
+        border-top: 2px solid #ccc;
+        padding-top: 5rem;
+    } 
 `
 const MaterialTitle = styled.h2`
     margin-bottom: 1rem;

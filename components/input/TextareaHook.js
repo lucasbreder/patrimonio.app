@@ -1,8 +1,6 @@
 import { useRef, useState } from "react"
 import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
 import styled from 'styled-components'
-import findValidation from "../../helpers/findValidation";
-
 
 import Editor, { composeDecorators } from '@draft-js-plugins/editor';
 
@@ -20,7 +18,7 @@ import '@draft-js-plugins/focus/lib/plugin.css'
 
 import EditorTools from "../editor/EditorTools";
 
-import SimpleResizeableEditor from "./Test"
+import Validation from "../Validation";
 
 export default function Textarea({ params, data, validation }) {
 
@@ -100,7 +98,7 @@ export default function Textarea({ params, data, validation }) {
                   plugins={plugins}
                 />
                 <AlignmentTool />
-              <p>{findValidation(validation, params.name)}</p>
+                <Validation validation={validation} name={params.name} />
               </div>
               <input type='hidden' name={params.name} value={JSON.stringify(convertToRaw(editorState.getCurrentContent()))} />
               </EditorContainer>

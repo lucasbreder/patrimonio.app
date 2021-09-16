@@ -8,7 +8,7 @@ export default function TableColumnGallery({ data, limit = 1 }) {
                 {
                     data.map((item, index) => {
                         if(index + 1 <= limit) {
-                            return <Image src={process.env.NEXT_PUBLIC_NAME_STORAGEBASEURL+item.path}/>
+                            return <Image key={index} src={process.env.NEXT_PUBLIC_NAME_STORAGEBASEURL+item.path}/>
                         }
                     })
                 }

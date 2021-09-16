@@ -37,7 +37,7 @@ const ButtonContainer = styled.div`
 
 const BackButtonContainer = styled.div`
     color: #fff;
-    font-weight: bold;
+    font-weight: 800;
     padding: 1rem;
     border-radius: 50px;
     background-color: ${props => props.theme.featureColor2};

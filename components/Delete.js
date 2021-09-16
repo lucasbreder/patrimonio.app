@@ -3,11 +3,11 @@ import { useRouter } from "next/router";
 import styled from 'styled-components'
 import { parseCookies } from 'nookies'
 
-export default function Delete({ id }) {
+export default function Delete({ id, parent }) {
 
     const path = useRouter();
 
-    const deleteItem = async (itemId, target) => {
+    const deleteItem = async (itemId, parent) => {
 
         const cookies = parseCookies()
         const token = cookies.token
@@ -21,7 +21,8 @@ export default function Delete({ id }) {
                 }
             })
             if (remove.status === 200) {
-                target.parentElement.parentElement.remove()
+                parent.current.remove()
+
             } else {
                 alert('Houve um erro ao excluir esse item')
             }
@@ -31,7 +32,7 @@ export default function Delete({ id }) {
       }
 
     return (
-       <DeleteContainer onClick={(event) => {deleteItem(id, event.target)}}> </DeleteContainer>
+       <DeleteContainer onClick={(event) => {deleteItem(id, parent)}}> </DeleteContainer>
     )
     
 }
