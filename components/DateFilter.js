@@ -2,8 +2,7 @@ import styled from "styled-components"
 import { BackgroundImage, Input, ButtonStyle } from "../styles/mixins"
 import nookies from 'nookies'
 import axios from "axios"
-import { useState } from "react/cjs/react.development"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import Button from "./Button"
 
 export default function DateFilter({ api, setItensFiltered, filterOptions }) {
