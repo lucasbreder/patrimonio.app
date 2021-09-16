@@ -4,12 +4,11 @@ import Section from './Section'
 import Title from './Title'
 import Head from 'next/head'
 import stringTranslate from '../helpers/stringTranslate'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import ListTools from './ListTools'
 import { useRouter } from 'next/router'
 import filterSet from '../helpers/filterSet'
-import { useState } from 'react/cjs/react.development'
 import FilterTools from './FilterTools'
 
 export default function ListBox({ data, slug }) {
