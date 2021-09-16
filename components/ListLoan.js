@@ -1,13 +1,11 @@
 import styled from 'styled-components'
 import Button from './Button'
 import Section from './Section'
-import TableBody from "./table/TableBody"
 import TableHeader from "./table/TableHeader"
 import Title from './Title'
 import Head from 'next/head'
 import stringTranslate from '../helpers/stringTranslate'
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
 import ListTools from './ListTools'
 import Moment from 'react-moment'
 import 'moment-timezone';
