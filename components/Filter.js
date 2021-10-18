@@ -20,7 +20,7 @@ export default function Filter({ api, setItensFiltered, filterOptions }) {
             'Authorization': `bearer ${cookies.token}`
           }
         })
-        const resData = await res.data
+        const resData = await res.data.data
         
         setItensFiltered(resData)
         

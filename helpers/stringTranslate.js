@@ -107,7 +107,8 @@ export default function stringTranslate(string) {
             'role': 'Função',
             'price': 'Preço',
             'management': 'Gestão',
-            'histories': 'Histórico'
+            'histories': 'Histórico',
+            'check_default': 'Orientaçao para Checagem'
         }
     }
 

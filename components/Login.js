@@ -8,18 +8,26 @@ import nookies from 'nookies'
 export default function Login() {
 
     const router = useRouter()
+    const [loginResult, setLoginResult] = useState()
 
     async function singin(event) {
         event.preventDefault()
         const formData = new FormData(event.target)
         const login = await axios.post(`${process.env.NEXT_PUBLIC_API}login`, formData)
 
-        nookies.set(null, 'token', login.data.token, {
-            maxAge: 30 * 24 * 60 * 60,
-            path: '/',
-          })
+        if (login.status == 200) {
+            nookies.set(null, 'token', login.data.token, {
+                maxAge: 30 * 24 * 60 * 60,
+                path: '/',
+              })
+    
+            router.push('/')
+        } else {
+            console.log('ts')
+            setLoginResult('falha')
+        }
 
-        router.push('/')
+
     }
 
 
@@ -28,10 +36,12 @@ export default function Login() {
             <LoginContainer>
                 <LoginTitle>{process.env.NEXT_PUBLIC_NAME}</LoginTitle>
                 <form onSubmit={(event) => {singin(event)}}>
-                    <input placeholder="Matricula" type="text" name="registry" />
-                    <input  placeholder="Senha" type="password" name="password" />
+                    <input placeholder="Matricula" type="text" name="registry" autoComplete='username' />
+                    <input  placeholder="Senha" type="password" name="password" autoComplete='current-password' />
                     <Button type="submit" label="Entrar" />
+                    <p>{loginResult}</p>
                 </form>
+                
             </LoginContainer>
         </LoginPage>
         )

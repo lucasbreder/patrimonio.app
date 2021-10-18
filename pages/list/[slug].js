@@ -3,9 +3,9 @@ import List from "../../components/List"
 import nookies from 'nookies'
 import ListBox from "../../components/ListBox"
 import ListLoan from "../../components/ListLoan"
-import { useEffect, useState } from "react"
+import ListImages from "../../components/ListImages"
 
-export default function ListQuery({ list, slug }) {
+export default function ListQuery({ list, slug, meta }) {
 
   switch (slug) {
     case 'categories':
@@ -14,10 +14,12 @@ export default function ListQuery({ list, slug }) {
       return <ListBox data={list} slug={slug} />
     case 'sublocals':
       return <ListBox data={list} slug={slug} />
+    case 'pictures':
+      return <ListImages data={list} slug={slug} />
     case 'loans':
       return <ListLoan data={list} slug={slug} />  
     default:
-      return <List data={list} slug={slug}/>
+      return <List data={list} slug={slug} meta={meta}/>
   }
 
 }
@@ -31,7 +33,8 @@ export async function getServerSideProps(ctx) {
       'Authorization': `bearer ${cookies.token}`
     }
   })
-  const list = await res.data
+  const list = await res.data.data ? res.data.data : res.data
+  const meta = await res.data.meta ? res.data.meta : ''
   const slug = ctx.params.slug
       
       if (!list) {
@@ -44,6 +47,7 @@ export async function getServerSideProps(ctx) {
         props: {
           list,
           slug,
+          meta
         },
       }
   }

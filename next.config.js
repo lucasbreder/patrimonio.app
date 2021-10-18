@@ -13,7 +13,7 @@ module.exports = {
     NEXT_BASE_PATH: "http://localhost:3000",
     NEXT_PUBLIC_API: "https://patrimonio-321811.uc.r.appspot.com/",
     NEXT_PUBLIC_NAME_STORAGEBASEURL: "https://storage.googleapis.com/patrimonio-321811.appspot.com/",
-    NEXT_PUBLIC_EXCLUDEFROMLIST: ['id', 'content', 'project', 'text', 'path', 'file', 'speech', 'remember_me_token', 'testimony', 'user_id', 'update_user_id', 'created_at', 'updated_at', 'baseMaterial', 'serial_number', 'management', 'subitem', 'price'],
+    NEXT_PUBLIC_EXCLUDEFROMLIST: ['id', 'description', 'features', 'check_default', 'content', 'project', 'text', 'path', 'file', 'speech', 'remember_me_token', 'testimony', 'user_id', 'update_user_id', 'created_at', 'updated_at', 'baseMaterial', 'serial_number', 'management', 'subitem', 'price'],
     NEXT_PUBLIC_FOREIGNKEYLIST: ['update_user_id', 'user_id', 'unit_id', 'category_id', 'local_id', 'sublocal_id', 'destination_user_id', 'destination_unit_id', 'material_id', 'base_material_id'],
     NEXT_PUBLIC_BOOLEANLIST: ['active', 'feature', 'terms'],
     NEXT_PUBLIC_ROUTES: [
@@ -56,6 +56,11 @@ module.exports = {
         title: "Checagem",
         path: "/check",
         icon: "check"
+      },
+      {
+        title: "Imagens",
+        path: "/pictures",
+        icon: "image"
       },
 
     ]

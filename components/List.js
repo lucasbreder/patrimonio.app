@@ -10,9 +10,10 @@ import { useState, useEffect } from 'react'
 import FilterTools from './FilterTools'
 import filterSet from '../helpers/filterSet'
 import { useRouter } from "next/router";
+import Pagination from './Pagination'
 
-export default function List({ data, slug }) {
-    
+export default function List({ data, slug, meta }) {
+    console.log(meta)
     const [itensFiltered, setItensFiltered] = useState()
 
     const router = useRouter()
@@ -46,7 +47,7 @@ export default function List({ data, slug }) {
                     :
                     <p>Nada Encontrado</p>
                 }
-                
+                <Pagination meta={meta} api={process.env.NEXT_PUBLIC_API + slug} setItensFiltered={setItensFiltered}/>
             </Section>
         )
     

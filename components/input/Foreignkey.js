@@ -30,13 +30,24 @@ export default function Foreignkey({ params, data, validation }) {
         return (
             <label className={params.name}>
                 <p>{stringTranslate(params.name)}</p>
-                
-                <select value={value} name={params.many ? params.name+'[]' : params.name} multiple={params.many ? true : false} onChange={(event) => { setValue(event.target.value) }}>
+
+                {params.many ?
+                    <select name={params.many ? params.name+'[]' : params.name} multiple={params.many ? true : false} onChange={(event) => { setValue(event.target.value) }}>
+                    {!params.many && <option value=""></option>}
+                    {query.map((item, index) => {
+                        return <option key={index} value={item.id} >{Object.values(item)[1]}</option>
+                    })}
+                    </select>
+                    :
+                    <select value={params.many ? '' : value} name={params.many ? params.name+'[]' : params.name} multiple={params.many ? true : false} onChange={(event) => { setValue(event.target.value) }}>
                     {!params.many && <option value=""></option>}
                     {query.map((item, index) => {
                         return <option key={index} value={item.id} >{Object.values(item)[1]}</option>
                     })}
                 </select>
+            }
+                
+                
                 <Validation validation={validation} name={params.name} />
             </label>
         )

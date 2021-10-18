@@ -29,14 +29,18 @@ export default function DetailsBaseMaterial({ data }) {
                         </Tools>
                     <DetailsBox>
                         <TitleSecondary>Orientações para conferência</TitleSecondary>
-                            <TextBox>{content.description}</TextBox>
+                            <TextBox>{content.check_default}</TextBox>
                             <QRCode value={process.env.NEXT_BASE_PATH+path.asPath} />
                     </DetailsBox>
                 </DetailsColumn>
                 <DetailsColumn>
                 <DetailsBox>
-                    <TitleSecondary>Características</TitleSecondary>
-                    <TextBox>{content.features}</TextBox>
+                            {content.features &&
+                                <>
+                                <TitleSecondary>Características</TitleSecondary>
+                                <TextBox>{content.features}</TextBox>
+                                </>
+                            }
                     </DetailsBox>
                     <DetailsBox>
                     <TitleSecondary>Categorias</TitleSecondary>
@@ -46,13 +50,14 @@ export default function DetailsBaseMaterial({ data }) {
                             })}    
                             </Categories>
                             <TitleSecondary>Imagens</TitleSecondary>
-                            <Pictures>
+                          {content.pictures && <Pictures>
                             
                                 {content.pictures.map((item, index) => {
                                 console.log(item)
                                 return <Gallery key={index} data={item} limit="20"/>
-                            })}    
-                        </Pictures>
+                                })}    </Pictures>
+                            }
+                        
                 </DetailsBox>
                     </DetailsColumn>
                     </DetailsSection>

@@ -10,8 +10,10 @@ import ListTools from './ListTools'
 import { useRouter } from 'next/router'
 import filterSet from '../helpers/filterSet'
 import FilterTools from './FilterTools'
+import TableColumnGallery from './table/TableColumnGallery'
+import { BackgroundImage } from '../styles/mixins'
 
-export default function ListBox({ data, slug }) {
+export default function ListImages({ data, slug }) {
     const router = useRouter()
 
     const [itensFiltered, setItensFiltered] = useState()
@@ -33,8 +35,8 @@ export default function ListBox({ data, slug }) {
                     {elements.map((item, index) => {
                         return (
                             <ListBoxItem key={index} ref={parentItem}>
-                                <Link href={`/edit/${slug}/${item.id}`}>{item[Object.keys(data[0])[1]]}</Link>
-                                <Additionalnfo>{(router.query.slug === 'sublocals' && item.local) && item.local.name}</Additionalnfo>
+                                <Image key={index} src={process.env.NEXT_PUBLIC_NAME_STORAGEBASEURL + item.path} />
+                                <ImageName>{item.path}</ImageName>
                                 <ToolsBox>
                                     <ListTools id={item.id} parent={parentItem} />
                                 </ToolsBox>
@@ -59,49 +61,18 @@ export default function ListBox({ data, slug }) {
     }
 }
 
-const Table = styled.table`
-    width: 100%;
-    border-radius: 20px;
-    display: flex;
-    flex-flow: column;
-
-    tr {
-        justify-content: flex-start;
-    }
-
-    tr td:first-of-type, tr th:first-of-type {
-        max-width: ${props => props.length > 10 ? "100%" : "100px"};
-        text-align: ${props => props.length > 10 ? "left" : "center"};
-    }
-
-    th, td {
-        padding: 2rem;
-        max-width: auto;
-        overflow: hidden;
-        
-        @media (max-width: ${props => props.theme.mobileBreakPoint}) {
-            padding: 1rem 2rem;
-            max-width: 100%;
-            overflow: visible;
-        }
-    }
-    img {
-        max-width: 100%;
-    }
-`
 const ListBoxContainer = styled.div`
     display: flex;
     flex-flow: wrap;
     
 `
 const ListBoxItem = styled.div`
-    border: 1px solid #4D4D4D;
     border-radius: 15px;
-    padding: 3rem 2rem;
     margin: 1rem;
     text-align: center;
     flex-basis: 20%;
     position: relative;
+
 
     @media (max-width: ${props => props.theme.mobileBreakPoint}) {
         flex-basis: 100%;
@@ -121,7 +92,20 @@ const ToolsBox = styled.div`
     right: 20px;
 `
 
-const Additionalnfo = styled.div`
-    font-size: .9rem;
+const Image = styled.div`
+    ${BackgroundImage}
+    background-color: #fff;
+    background-image: url(${props => props.src});
+    background-size: auto 80%;
+    width: 100%;
+    height: 300px;
+    border-radius: 15px;
+`
+
+const ImageName = styled.div`
+    font-size: .8rem;
+    color:#4d4d4d;
+    width: 100%;
+    text-align: left;
     margin-top: .5rem;
 `
