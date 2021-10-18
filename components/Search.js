@@ -20,7 +20,7 @@ export default function Search({ setItensFiltered, api }) {
             'Authorization': `bearer ${cookies.token}`
           }
         })
-        const resData = await res.data.data
+        const resData = await  res.data.data ?  res.data.data : res.data
         searchInput.current && searchInput.current.classList.toggle('active')
         setItensFiltered(resData)
         

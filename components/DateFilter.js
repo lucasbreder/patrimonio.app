@@ -35,8 +35,7 @@ export default function DateFilter({ api, setItensFiltered, filterOptions }) {
           }
         })
 
-        console.log(request)
-        const resData = await res.data
+        const resData = await  res.data.data ?  res.data.data : res.data
         setItensFiltered(resData)
         
     }

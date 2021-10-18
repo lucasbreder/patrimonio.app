@@ -90,7 +90,7 @@ export default function stringTranslate(string) {
             'terms': 'Aceitou os termos?',
             'new': 'Novo',
             'picture': 'Imagens',
-            'base_materials': 'Materiais Base',
+            'base_materials': 'Materiais Modelo',
             'pictures': 'Imagem',
             'base_material_id': 'Nome',
             'identification_number': 'Identificação',
@@ -108,7 +108,8 @@ export default function stringTranslate(string) {
             'price': 'Preço',
             'management': 'Gestão',
             'histories': 'Histórico',
-            'check_default': 'Orientaçao para Checagem'
+            'check_default': 'Orientaçao para Checagem',
+            'quantity': 'Quantidade no local'
         }
     }
 

@@ -129,7 +129,7 @@ export default function Check({ locals }) {
                                     <input type="hidden" value={material.id} name="material_id" />
                                     
                                 </MaterialInputs>
-                                <MaterialOrientation>{material.baseMaterial.description}</MaterialOrientation>
+                                <MaterialOrientation>{material.baseMaterial.check_default}</MaterialOrientation>
                                 </MaterialContainer>
                             </CheckForm>
                         )

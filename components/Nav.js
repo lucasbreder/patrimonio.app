@@ -131,6 +131,9 @@ const NavItem = styled.li`
     :hover {
         transform: translateX(15px);
     }
+    :hover div {
+        display: block;
+    }
     a {
         position: absolute;
         top: 0;

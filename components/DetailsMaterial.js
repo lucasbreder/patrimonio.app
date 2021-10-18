@@ -7,6 +7,7 @@ import Section from "./Section"
 import QRCode from 'qrcode.react'
 import ListTools from "./ListTools"
 import Button from "./Button"
+import { ButtonStyle } from "../styles/mixins"
 
 export default function DetailsMaterial({ data }) {
     const [content] = useState(data)
@@ -22,6 +23,8 @@ export default function DetailsMaterial({ data }) {
                         <Subtitle>{content.baseMaterial.name_alternative}</Subtitle>
                         <ListTools id={content.id}/>
                         <TextBox>{content.baseMaterial.description}</TextBox>
+                        <TitleBox>Orientaçao para checagem</TitleBox>
+                        <TextBox>{content.baseMaterial.check_default}</TextBox>
                     <DetailsBox>
                             <RangeBox>
                                 <span>Conversação</span>
@@ -31,10 +34,12 @@ export default function DetailsMaterial({ data }) {
                                 <span>Usabilidade</span>
                                 <Range number={content.usability} />
                             </RangeBox>
-                    </DetailsBox>
+                        </DetailsBox>
                         <DetailsBox>
                         
                             <TitleSecondary>Informações Adicionais</TitleSecondary>
+                            <TitleBox>Quantidade no Local</TitleBox>
+                            <TextBox>{content.quantity}</TextBox>
                             <TitleBox>Número de Série</TitleBox>
                             <TextBox>{content.serial_number}</TextBox>
                             <TitleBox>Gestão</TitleBox>
@@ -47,21 +52,33 @@ export default function DetailsMaterial({ data }) {
                     </DetailsBox>
                     <DetailsBox>
                 </DetailsBox>
-                </DetailsColumn>
+                    </DetailsColumn>
+                    <DetailsColumn>
+                        <DetailsBox>
+                            <TitleBox>Status</TitleBox>
+                            <StatusBox>{content.status}</StatusBox>
+                            <TitleBox>Local</TitleBox>
+                            <LocalBox>{content.local.name}</LocalBox>
+                            <SubLocalBox>{content.sublocal.name}</SubLocalBox>
+                        </DetailsBox>
+                    </DetailsColumn>
                 <DetailsColumn>
                     <DetailsBox>
                             <TitleSecondary>Histórico</TitleSecondary>
                             <Button type='new' link={`/create/histories?material_id=${content.id}`} label='Adicionar' />
                         <History>
-                            {content.histories.map((item, index) => {
+                                {content.histories.map((item, index) => {
+                                console.log(item)
                                 return (
                                     <HistoryItem key={index}>
                                         <HistoryItemDate>
                                             <Moment format="DD/MM/YYYY" >{item.created_at}</Moment>
                                         </HistoryItemDate>
+                                        <HistoryAuthor>{item.user.registry}</HistoryAuthor>
                                         <HistoryItemDescription>
                                             { item.description }
                                         </HistoryItemDescription>
+                                        <ListTools id={item.id}/>
                                     </HistoryItem>
                                 )
                             })}    
@@ -90,6 +107,13 @@ const DetailsColumn = styled.div`
     :first-of-type {
         border-right: 1px solid #4d4d4d;
         padding-left: 0;
+    }
+    :nth-of-type(2) {
+        flex-basis: 10%;
+        border-right: 1px solid #4d4d4d;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
     }
 `
 
@@ -150,10 +174,19 @@ const TextBox = styled.div`
 const History = styled.div`
     display: flex;
     flex-direction: column;
+    
 `
 
 const HistoryItem = styled.div`
     margin: 1rem 0;
+    position: relative;
+`
+
+const HistoryAuthor = styled.div`
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: .8rem;
 `
 
 const RangeBox = styled.div`
@@ -180,4 +213,35 @@ const HistoryItemDate = styled.div`
 `
 const HistoryItemDescription = styled.div`
     line-height: 2rem;
+    margin-bottom: 1rem;
+`
+
+const StatusBox = styled.div`
+    ${ButtonStyle}
+    margin-bottom: 3rem;
+`
+const LocalBox = styled.div`
+    ${ButtonStyle}
+    background-color: ${props => props.theme.featureColor2};
+`
+const SubLocalBox = styled.div`
+    ${ButtonStyle}
+    background-color: ${props => props.theme.featureColor2};
+    position: relative;
+    margin-top: 2.2rem;
+    ::before {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 50%;
+        top: -25px;
+        transform: translateX(-50%);
+
+        width: 0; 
+        height: 0; 
+        border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  
+  border-top: 15px solid #707070;
+    }
 `
