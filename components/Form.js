@@ -5,7 +5,6 @@ import File from "./input/File"
 import Select from "./input/Select"
 import Text from "./input/Text"
 import Foreignkey from "./input/Foreignkey"
-import EditorInput from "./input/EditorInput"
 import { useRouter } from "next/router"
 import styled from 'styled-components'
 import Textarea from "./input/Textarea"
