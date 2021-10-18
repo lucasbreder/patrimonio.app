@@ -8,14 +8,6 @@
     "start": "next start"
   },
   "dependencies": {
-    "@draft-js-plugins/alignment": "^5.0.0",
-    "@draft-js-plugins/drag-n-drop": "^4.2.0",
-    "@draft-js-plugins/drag-n-drop-upload": "^4.1.0",
-    "@draft-js-plugins/editor": "^4.1.0",
-    "@draft-js-plugins/focus": "^4.1.1",
-    "@draft-js-plugins/image": "^4.1.1",
-    "@draft-js-plugins/resizeable": "^5.0.1",
-    "@draft-js-plugins/video": "^4.1.1",
     "axios": "^0.21.1",
     "draft-js": "^0.11.7",
     "moment": "^2.29.1",

@@ -13,19 +13,18 @@ import { useRouter } from "next/router";
 import Pagination from './Pagination'
 
 export default function List({ data, slug, meta }) {
-    console.log(meta)
     const [itensFiltered, setItensFiltered] = useState()
 
     const router = useRouter()
 
     useEffect(() => {
-        const handleRouteChange = (url) => {
+        const handleRouteChange = () => {
             setItensFiltered()
         }
 
         router.events.on('routeChangeComplete', handleRouteChange)
 
-    }, [itensFiltered])
+    })
     
 
     const exclude = process.env.NEXT_PUBLIC_EXCLUDEFROMLIST

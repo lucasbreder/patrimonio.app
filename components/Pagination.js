@@ -1,4 +1,4 @@
-import { useState } from "react/cjs/react.development"
+import { useState } from "react"
 import styled from "styled-components"
 import nookies from 'nookies'
 import axios from "axios"
@@ -9,10 +9,10 @@ export default function Pagination({ meta, api, setItensFiltered }) {
 
     const [activePage, setActivePage] = useState(meta.current_page)
 
+    
     for (let index = 1; index < meta.last_page+1; index++) {
         pages.push(index) 
     }
-    console.log(pages)
 
     async function pager(api, page) {
         const cookies = nookies.get()
