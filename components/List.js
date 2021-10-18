@@ -45,7 +45,7 @@ export default function List({ data, slug, meta }) {
                         <TableBody data={itensFiltered ? itensFiltered : data} slug={slug} exclude={exclude} />
                     </Table>
                     :
-                    <p>Nada Encontrado</p>
+                    <p>Nada Encontrado...</p>
                 }
                 <Pagination meta={meta} api={process.env.NEXT_PUBLIC_API + slug} setItensFiltered={setItensFiltered}/>
             </Section>
