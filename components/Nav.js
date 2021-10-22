@@ -66,6 +66,7 @@ width: 8rem;
 min-height: 100%;
 background-image: linear-gradient(45deg, ${props => props.theme.gradientColor1}, ${props => props.theme.gradientColor2});
 transition: all 1s;
+z-index: 99;
 
     @media (max-width: ${props => props.theme.mobileBreakPoint}) {
         width: 100%;
@@ -154,11 +155,12 @@ const HoverTitle = styled.div`
     position: absolute;
     top: 0;
     left: 115%;
-    background-color: #f2f2f2;
+    background-color: #fff;
     padding: .5rem;
     border-radius: 15px;
     width: 200px;
     display: none;
+    font-weight: bold;
 
     &.activeTitle {
         display: block;

@@ -68,7 +68,6 @@ export default function DetailsMaterial({ data }) {
                             <Button type='new' link={`/create/histories?material_id=${content.id}`} label='Adicionar' />
                         <History>
                                 {content.histories.map((item, index) => {
-                                console.log(item)
                                 return (
                                     <HistoryItem key={index}>
                                         <HistoryItemDate>
@@ -78,7 +77,7 @@ export default function DetailsMaterial({ data }) {
                                         <HistoryItemDescription>
                                             { item.description }
                                         </HistoryItemDescription>
-                                        <ListTools id={item.id}/>
+                                        <ListTools id={item.id} slug="histories"/>
                                     </HistoryItem>
                                 )
                             })}    

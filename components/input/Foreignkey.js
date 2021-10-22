@@ -24,7 +24,7 @@ export default function Foreignkey({ params, data, validation }) {
     useEffect(() => {
         setValue(data)
         getData()
-        if (params.many) {
+        if (params.many && Array.isArray(data)) {
             data.forEach(element => {
                 valueMany.push(element.id)
             });
@@ -57,7 +57,13 @@ export default function Foreignkey({ params, data, validation }) {
             </label>
         )
     }  else {
-        return "Carregando"
+        return (
+            <label className={params.name}>
+                <p>{stringTranslate(params.name)}</p>
+                <input type="text" placeholder="Carregando..." disabled/>
+                <Validation validation={validation} name={params.name} />
+            </label>
+        )
     }
 
     

@@ -4,12 +4,14 @@ import styled from 'styled-components'
 import { parseCookies } from 'nookies'
 import Link from "next/link";
 
-export default function EditButton({ id }) {
+export default function EditButton({ id, slug }) {
 
     const path = useRouter();
 
+    const apislug = slug ? slug : path.query.slug
+
     return (
-        <EditContainer><Link href={`/edit/${path.query.slug}/${id}`}> </Link></EditContainer>
+        <EditContainer><Link href={`/edit/${apislug}/${id}`}> </Link></EditContainer>
     )
     
 }

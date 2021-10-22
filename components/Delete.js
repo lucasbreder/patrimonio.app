@@ -3,9 +3,10 @@ import { useRouter } from "next/router";
 import styled from 'styled-components'
 import { parseCookies } from 'nookies'
 
-export default function Delete({ id, parent }) {
-
+export default function Delete({ id, parent, slug }) {
     const path = useRouter();
+
+    const apislug = slug ? slug : path.query.slug
 
     const deleteItem = async (itemId, parent) => {
 
@@ -15,13 +16,14 @@ export default function Delete({ id, parent }) {
         const confirmRes = confirm(`Deseja mesmo excluir o item ${id}?`)
 
         if (confirmRes) {
-            const remove = await axios.delete(`${process.env.NEXT_PUBLIC_API}${path.query.slug}/${itemId}`, {
+            const remove = await axios.delete(`${process.env.NEXT_PUBLIC_API}${apislug}/${itemId}`, {
                 headers: {
                     'Authorization': `bearer ${token}`
                 }
             })
             if (remove.status === 200) {
-                parent.current.remove()
+                
+                parent && parent.current.remove()
 
             } else {
                 alert('Houve um erro ao excluir esse item')

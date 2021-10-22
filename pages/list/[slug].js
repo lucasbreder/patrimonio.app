@@ -4,12 +4,15 @@ import nookies from 'nookies'
 import ListBox from "../../components/ListBox"
 import ListLoan from "../../components/ListLoan"
 import ListImages from "../../components/ListImages"
+import ListMaterial from "../../components/ListMaterial"
 
 export default function ListQuery({ list, slug, meta }) {
 
   switch (slug) {
     case 'categories':
       return <ListBox data={list} slug={slug} />
+    case 'materials':
+      return <ListMaterial data={list} slug={slug} meta={meta} />
     case 'locals':
       return <ListBox data={list} slug={slug} />
     case 'sublocals':

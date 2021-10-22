@@ -11,6 +11,9 @@ import Textarea from "./input/Textarea"
 import Notice from "./Notice"
 import Checkbox from "./input/Checkbox"
 import { parseCookies } from 'nookies'
+import DateInput from "./input/Date"
+import Range from "./input/Range"
+import LocalInput from "./input/LocalInput"
 
 
 export default function Form({ api, fields, data, type = "" }) {
@@ -18,8 +21,6 @@ export default function Form({ api, fields, data, type = "" }) {
     const [status, setStatus] = useState()
     const [validation, setValidation] = useState()
     const router = useRouter()
-
-
     
     const sendForm = async (event) => {
         event.preventDefault()
@@ -47,10 +48,10 @@ export default function Form({ api, fields, data, type = "" }) {
             })
             setStatus(query.status)
           } catch (ex) {
-            if (ex.response && ex.response.status === 422) {
+            if (ex.response && ex.response.status >= 400) {
                 const errors = ex.response.data.errors;
-                console.log(errors)
                 setValidation(errors)
+                setStatus(ex.response.status)
               }
           }
          
@@ -81,13 +82,14 @@ export default function Form({ api, fields, data, type = "" }) {
                                     <File validation={validation} key={index} params={item} data={data ? data[item.name] : ""}/>
                                 )
                             case "foreignkey":
-                                return (
-                                    <Foreignkey validation={validation} key={index} params={item} data={data ? data[item.name] : ""}/>
-                                )
-                            case "editor":
-                                return (
-                                    <EditorInput key={index} validation={validation} params={item} data={data ? data[item.name] : ""}/>
-                                )
+                                if (item.name === "local_id" && router.query.slug === 'materials') {
+                                    return <LocalInput validation={validation} key={index} params={item} data={data ? data : ""} />
+                                } else if (item.name === "sublocal_id") {
+                                    return ''
+                                } else {
+                                    return <Foreignkey validation={validation} key={index} params={item} data={data ? data[item.name] : ""}/>
+                                }
+                                    
                             case "textarea":
                                 return (
                                     <Textarea validation={validation} key={index} params={item} data={data ? data[item.name] : ""}/>
@@ -96,6 +98,16 @@ export default function Form({ api, fields, data, type = "" }) {
                             case "boolean":
                                 return (
                                     <Checkbox validation={validation} key={index} params={item} data={data ? data[item.name] : ""}/>
+                                )
+                            
+                            case "date":
+                                return (
+                                    <DateInput validation={validation} key={index} params={item} data={data ? data[item.name] : ""}/>
+                                )
+                            
+                            case "range":
+                                return (
+                                    <Range validation={validation} key={index} params={item} data={data ? data[item.name] : ""}/>
                                 ) 
                         
                             default:
@@ -150,11 +162,11 @@ const FormContainer = styled.div`
         font-size: .9rem;
         font-weight: bold;
     }
-    input, select, textarea {
+    input, select, textarea, input:disabled {
         border-radius: 10px;
         padding: 1rem;
         border: none;
-        border-left: 0 solid ${props => props.theme.featureColor};;
+        border-left: 0 solid ${props => props.theme.featureColor};
         font-family: inherit;
         outline: none;
         transition: all .5s ease-in-out;
@@ -163,6 +175,10 @@ const FormContainer = styled.div`
             font-size: 1rem;
         }
     }
+
+    input:disabled {
+        background: #ccc;
+        }
 
     textarea {
         min-height: 100px;
