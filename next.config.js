@@ -11,7 +11,7 @@ module.exports = {
     NEXT_PUBLIC_NAME: "Patrimonio",
     NEXT_PUBLIC_LANGUAGE: 'pt-br',
     NEXT_BASE_PATH: "http://localhost:3000",
-    NEXT_PUBLIC_API: "https://patrimonio-321811.uc.r.appspot.com",
+    NEXT_PUBLIC_API: "https://patrimonio-321811.uc.r.appspot.com/",
     NEXT_PUBLIC_NAME_STORAGEBASEURL: "https://storage.googleapis.com/patrimonio-321811.appspot.com/",
     NEXT_PUBLIC_EXCLUDEFROMLIST: ['id', 'unit_id','description', 'features', 'check_default', 'content', 'project', 'text', 'path', 'file', 'speech', 'remember_me_token', 'testimony', 'user_id', 'update_user_id', 'created_at', 'updated_at', 'serial_number','base_material_id', 'local_id', 'sublocal_id', 'management', 'subitem', 'price'],
     NEXT_PUBLIC_BOOLEANLIST: ['active', 'feature', 'terms'],
