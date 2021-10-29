@@ -10,27 +10,27 @@ import TableColumnBoolean from "./TableColumnBoolean"
 import TableColumnGallery from "./TableColumnGallery"
 import ListTools from "../ListTools"
 import { useRef } from "react"
+import TableHeader from "./TableHeader"
 
 export default function TableBody({ data, slug, exclude }) {
     const path = useRouter();
     const parentItem = useRef(null)
 
     return (
+        <>
         <TableBodyContainer>
             {data.map((item, index) => {
-
+            const keys = slug === 'materials' ? Object.keys(item).sort() : Object.keys(item)
             return (
                 <tr key={index} ref={parentItem}> 
-                {Object.keys(item).map(
+                {keys.map(
                     (item, innerIndex) => {
-                        if (!exclude.includes(item)) {
-                        if (process.env.NEXT_PUBLIC_FOREIGNKEYLIST.includes(item)) {
-                            return <TableColumnForeignkey title={item} slug={item} key={innerIndex} data={data[index][item]} />
-                        } else if (varType(data[index][item]) === 'object') {
+                    if (!exclude.includes(item)) {
+                        if (varType(data[index][item]) === 'object') {
                             if (item === 'pictures') {
                                 return <TableColumnGallery data={data[index][item]} key={innerIndex}/>
                             } else {
-                                return <TableColumnObject title={item} slug={item} key={innerIndex} data={data[index][item]} />
+                                return <TableColumnObject title={item} key={innerIndex} link={slug === 'users' ? `/edit/${path.query.slug}/${data[index].id}` :`/details/${path.query.slug}/${data[index].id}`}  data={data[index][item]} />
                             }
                             
                         } else if (varType(data[index][item]) === 'date') {
@@ -49,7 +49,8 @@ export default function TableBody({ data, slug, exclude }) {
             )
             
         })}
-        </TableBodyContainer>
+            </TableBodyContainer>
+            </>
     )
     
 }
@@ -86,6 +87,7 @@ const TableBodyContainer = styled.tbody`
         font-weight: 900;
         font-style: italic;
         font-size: 1.3rem;
+        flex-basis: 20%;
 
         @media (max-width: ${props => props.theme.mobileBreakPoint}) {
             font-size: 2rem;
@@ -95,7 +97,6 @@ const TableBodyContainer = styled.tbody`
         background-color: ${props => props.theme.tableBackgroundColor};
         transition: all .3s;
         flex: 1 1 0;
-        word-break: break-all;
     }
     tr:hover td {
         background-color: ${props => props.theme.backgroundColor};

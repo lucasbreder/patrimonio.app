@@ -23,7 +23,7 @@ export default function Delete({ id, parent, slug }) {
             })
             if (remove.status === 200) {
                 
-                parent && parent.current.remove()
+                path.push(path)
 
             } else {
                 alert('Houve um erro ao excluir esse item')

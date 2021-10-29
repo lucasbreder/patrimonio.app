@@ -1,10 +1,14 @@
-import { useState } from 'react'
 import styled from 'styled-components'
 import stringTranslate from '../../helpers/stringTranslate'
 
-export default function TableHeader({ data, exclude }) {
+export default function TableHeader({ data, exclude, slug }) {
 
-    const [headers] = useState(Object.keys(data[0])[0] !== "0" ? Object.keys(data[0]) : data)
+    const headers = 
+        Object.keys(data[0])[0] !== "0"
+            ?
+            slug === 'materials' ? Object.keys(data[0]).sort() : Object.keys(data[0])
+            :
+            data
     
     return (
         <TableHeaderContainer>
@@ -27,7 +31,7 @@ const TableHeaderContainer = styled.thead`
     flex-direction: column;
     justify-content: space-between;
 
-    .pictures {
+    .pictures, .name {
         order: -1;
     }
 
@@ -50,6 +54,10 @@ const TableHeaderContainer = styled.thead`
         text-transform: capitalize;
         font-weight: bold;
         color: ${props => props.theme.fadeColor};
+    }
+
+    tr th:nth-of-type(1) {
+        flex-basis: 20%;
     }
 
 

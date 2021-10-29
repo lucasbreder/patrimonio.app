@@ -109,7 +109,8 @@ export default function stringTranslate(string) {
             'management': 'Gestão',
             'histories': 'Histórico',
             'check_default': 'Orientaçao para Checagem',
-            'quantity': 'Quantidade no local'
+            'quantity': 'Quantidade no local',
+            'unit': 'Unidade'
         }
     }
 

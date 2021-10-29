@@ -1,21 +1,21 @@
 import Link from 'next/link'
 import styled from 'styled-components'
 
-export default function Button({ type, label, link }) {
+export default function Button({ type, label, link, onClick }) {
     switch (type) {
         case "submit":
             return (
-                <ButtonSubmit>{label}</ButtonSubmit>
+                <ButtonSubmit onClick={onClick}>{label}</ButtonSubmit>
             )
         case "new":
             return (
-                <ButtonContainer>
+                <ButtonContainer onClick={onClick}>
                     <Link href={link}>{label}</Link>
                 </ButtonContainer>
             )
         case "back":
             return (
-                <BackButtonContainer>
+                <BackButtonContainer onClick={onClick}>
                   {label}
                 </BackButtonContainer>
             )

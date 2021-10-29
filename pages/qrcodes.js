@@ -11,7 +11,7 @@ export async function getServerSideProps(ctx) {
 
   const cookies = nookies.get(ctx)
 
-  const res = await axios.get(`${process.env.NEXT_PUBLIC_API}materials`, {
+  const res = await axios.get(`${process.env.NEXT_PUBLIC_API}materials/?perPage=all`, {
     headers: {
       'Authorization': `bearer ${cookies.token}`
     }

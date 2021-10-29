@@ -26,4 +26,5 @@ export default function ListQRCode({ data }) {
 
 const QRCodeList = styled.table`
     display: flex;
+    flex-wrap: wrap;
 `

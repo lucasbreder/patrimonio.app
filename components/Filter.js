@@ -1,10 +1,15 @@
 import styled from "styled-components"
 import { BackgroundImage } from "../styles/mixins"
-import nookies from 'nookies'
+import { useEffect, useRef, useState } from "react"
+import { useRouter } from "next/router"
 import axios from "axios"
-import { useRef } from "react"
+import { parseCookies } from "nookies"
 
-export default function Filter({ api, setItensFiltered, filterOptions }) {
+export default function Filter() {
+
+    const [filters, setFilters] = useState([])
+
+    const router = useRouter()
 
     const filterList = useRef()
 
@@ -12,29 +17,49 @@ export default function Filter({ api, setItensFiltered, filterOptions }) {
         filterList.current.classList.toggle("active")
     }
     
-    async function filter(api, term, value) {
-        const cookies = nookies.get()
-        
-        const res = await axios.get(api+'?'+term+'='+value, {
-          headers: {
-            'Authorization': `bearer ${cookies.token}`
-          }
-        })
-        const resData = await  res.data.data ?  res.data.data : res.data
-        
-        setItensFiltered(resData)
-        
+    async function filter(term, value) {
+        if (value === "all") {
+            delete router.query[term]
+        } else {  
+            router.query[term] = value
+            delete router.query.page
+            router.push(router)
+        }
+
     }
+    
+
+    const getFilters = async () => {
+        const cookies = parseCookies()
+        const filterQuery = await axios.get(`${process.env.NEXT_PUBLIC_API}filter/${router.query.slug}`, {
+        headers: {
+            'Authorization': `bearer ${cookies.token}`
+        }
+        })
+
+        if (filterQuery.data) {
+            setFilters(filterQuery.data ? filterQuery.data : [])
+        }
+    }
+
+    useEffect(() => {
+        getFilters()
+
+    },[filters])
 
 
     return (
         <FilterContainer>
+            { filters.length > 0 && 
+            <>            
             <FilterIcon onClick={() => {showFilter()}} />
-            <FilterList ref={filterList}>
-                {filterOptions.map((item, index) => {
-                    return <FilterItem key={index} onClick={() => { filter(api, item.term, item.value); showFilter() }} >{item.title}</FilterItem>
+             <FilterList ref={filterList}>
+                {filters.map((item, index) => {
+                    return <FilterItem key={index} onClick={() => { filter(item.term, item.value); showFilter() }} >{item.title}</FilterItem>
                 })}
                 </FilterList>
+                </>
+            }
         </FilterContainer>
     )
 }
@@ -62,13 +87,28 @@ const FilterList = styled.div`
     right: 0;
     z-index: 9;
     display: none;
+    box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+    opacity: 0;
 
     &.active {
         display: block;
+        opacity: 1;
     }
 `
 
 const FilterItem = styled.div`
-    padding: 1rem;
+    padding: .5rem 1rem;
     color: #fff;
+    cursor: pointer;
+    transition: all 1s;
+
+    :first-of-type {
+        padding-top: 1rem;
+    }
+    :last-of-type {
+        padding-bottom: 1rem;
+    }
+    :hover {
+        opacity: .3;
+    }
 `

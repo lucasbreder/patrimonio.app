@@ -4,15 +4,17 @@ import Link from 'next/link'
 import ListTools from './ListTools'
 import { useRouter } from 'next/router'
 
-export default function ListBoxItem({ data, slug }) {
-    console.log(data)
+export default function ListBoxItem({ data }) {
+
     const router = useRouter()
 
     const parentItem = useRef(null)
 
+    
+
     return (
         <Item ref={parentItem}>
-            <Link href={`/edit/${slug}/${data.id}`}>{data.name}</Link>
+            <Link href={router.query.slug !== 'categories' ? `/list/materials/?${router.query.slug}=${data.id}` : `/edit/${router.query.slug}/${data.id}`}>{data.name}</Link>
             <Additionalnfo>{(router.query.slug === 'sublocals' && data.local) && data.local.name}</Additionalnfo>
             <ToolsBox>
                 <ListTools id={data.id} parent={parentItem} />

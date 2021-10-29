@@ -1,34 +1,30 @@
 import Link from "next/link"
-import { useState, useEffect } from "react"
 import styled from 'styled-components'
-import fieldToSlug from "../../helpers/fieldToSlug"
 import TableColumnTitleMobile from "./TableColumnTitleMobile"
 
-export default function TableColumnObject({ data, slug, title }) {
-
-    const [key, setKey] = useState()
-
-    useEffect(() => {
-        if (data && data.length > 0) {
-            setKey(Object.keys(data[0])[1])
-        } else[
-            setKey()
-        ]
-    }, [])
+export default function TableColumnObject({ data, title, link }) {
 
     return (
         <td>
             <TableColumnTitleMobile title={title}/>
-            <TagContainer>
-                {data && Object.entries(data).map((item, index) => {
-                    const title = item[1][key]
-                    return (
-                        <Tag key={index}>
-                            <Link href={`/edit/${fieldToSlug(slug)}/${item[1].id}`}><a> {title} </a></Link>
-                        </Tag>
-                    )
-                })}
-            </TagContainer>
+            {data &&
+                
+                <TagContainer>
+                {
+                    Array.isArray(data)
+                        
+                    ?
+                        data.map((item, index) => {
+
+                             return <Tag><Link key={index} href={link}><a> {item.name} </a></Link></Tag>
+                        })
+                    :
+                    <Tag><Link href={link}><a> {data.name} </a></Link></Tag>
+
+                }
+
+                </TagContainer>
+            }
         </td>
     )
 }
@@ -57,4 +53,5 @@ const TagContainer = styled.span`
     display: flex;
     align-items: center;
     flex-flow: wrap;
+
 `

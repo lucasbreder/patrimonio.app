@@ -4,15 +4,13 @@ import nookies from 'nookies'
 import ListBox from "../../components/ListBox"
 import ListLoan from "../../components/ListLoan"
 import ListImages from "../../components/ListImages"
-import ListMaterial from "../../components/ListMaterial"
+import { useRouter } from "next/router"
 
 export default function ListQuery({ list, slug, meta }) {
 
   switch (slug) {
     case 'categories':
       return <ListBox data={list} slug={slug} />
-    case 'materials':
-      return <ListMaterial data={list} slug={slug} meta={meta} />
     case 'locals':
       return <ListBox data={list} slug={slug} />
     case 'sublocals':
@@ -29,9 +27,13 @@ export default function ListQuery({ list, slug, meta }) {
 
 export async function getServerSideProps(ctx) {
 
+  const qs = Object.keys(ctx.query)
+    .map(key => `${key}=${ctx.query[key]}`)
+    .join('&');
+
   const cookies = nookies.get(ctx)
 
-  const res = await axios.get(`${process.env.NEXT_PUBLIC_API}${ctx.params.slug}`, {
+  const res = await axios.get(`${process.env.NEXT_PUBLIC_API}${ctx.params.slug}?${qs}`, {
     headers: {
       'Authorization': `bearer ${cookies.token}`
     }

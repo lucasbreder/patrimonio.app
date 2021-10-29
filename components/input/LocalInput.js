@@ -49,9 +49,10 @@ export default function LocalInput({ params, data, validation }) {
             </label>
             <label className={params.name}>
             <p>Sublocal</p>
-            <select name='sublocal_id' value={valueRelation}>
+                    <select name='sublocal_id' value={valueRelation} onChange={(event) => { setValueRelation(event.target.value) }}>
+                    <option value=""></option>
                     {queryRelation.map((item, index) => {
-                        return <option key={index} value={item.id} >{Object.values(item)[1]}</option>
+                        return <option key={index} value={item.id}>{Object.values(item)[1]}</option>
                     })}
             </select>
             <Validation validation={validation} name={params.name} />

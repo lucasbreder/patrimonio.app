@@ -27,7 +27,7 @@ export default function DetailsMaterial({ data }) {
                         <TextBox>{content.baseMaterial.check_default}</TextBox>
                     <DetailsBox>
                             <RangeBox>
-                                <span>Conversação</span>
+                                <span>Conservaçao</span>
                                 <Range number={content.conservation} />
                             </RangeBox>
                             <RangeBox>
@@ -57,9 +57,9 @@ export default function DetailsMaterial({ data }) {
                         <DetailsBox>
                             <TitleBox>Status</TitleBox>
                             <StatusBox>{content.status}</StatusBox>
-                            <TitleBox>Local</TitleBox>
-                            <LocalBox>{content.local.name}</LocalBox>
-                            <SubLocalBox>{content.sublocal.name}</SubLocalBox>
+                            {content.local && <TitleBox>Local</TitleBox>}
+                            {content.local && <LocalBox>{content.local.name}</LocalBox>}
+                            {content.sublocal && <SubLocalBox>{content.sublocal.name}</SubLocalBox>}
                         </DetailsBox>
                     </DetailsColumn>
                 <DetailsColumn>
@@ -73,10 +73,8 @@ export default function DetailsMaterial({ data }) {
                                         <HistoryItemDate>
                                             <Moment format="DD/MM/YYYY" >{item.created_at}</Moment>
                                         </HistoryItemDate>
-                                        <HistoryAuthor>{item.user.registry}</HistoryAuthor>
-                                        <HistoryItemDescription>
-                                            { item.description }
-                                        </HistoryItemDescription>
+                                        <HistoryAuthor>{`${item.user.name} (${item.user.registry})`}</HistoryAuthor>
+                                        <HistoryItemDescription dangerouslySetInnerHTML={{__html: item.description.replace(',', '</br>')}} /> 
                                         <ListTools id={item.id} slug="histories"/>
                                     </HistoryItem>
                                 )

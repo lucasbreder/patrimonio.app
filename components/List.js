@@ -6,26 +6,13 @@ import TableHeader from "./table/TableHeader"
 import Title from './Title'
 import Head from 'next/head'
 import stringTranslate from '../helpers/stringTranslate'
-import { useState, useEffect } from 'react'
 import FilterTools from './FilterTools'
-import filterSet from '../helpers/filterSet'
-import { useRouter } from "next/router";
 import Pagination from './Pagination'
+import { useRouter } from 'next/router'
 
 export default function List({ data, slug, meta }) {
-    const [itensFiltered, setItensFiltered] = useState()
 
     const router = useRouter()
-
-    useEffect(() => {
-        const handleRouteChange = () => {
-            setItensFiltered()
-        }
-
-        router.events.on('routeChangeComplete', handleRouteChange)
-
-    })
-    
 
     const exclude = process.env.NEXT_PUBLIC_EXCLUDEFROMLIST
 
@@ -36,17 +23,26 @@ export default function List({ data, slug, meta }) {
                 </Head>
                 <Title text={slug} />
                 <Button type='new' link={`/create/${slug}`} label='Adicionar' />
-                <FilterTools setItensFiltered={setItensFiltered} api={process.env.NEXT_PUBLIC_API + slug} filterSet={filterSet(slug)} />
+                <FilterTools />
                 {
-                    itensFiltered || data ?
-                    <Table>
-                        <TableHeader data={data} exclude={exclude} />
-                        <TableBody data={itensFiltered ? itensFiltered : data} slug={slug} exclude={exclude} />
-                    </Table>
-                    :
-                    <p>Nada Encontrado...</p>
+                    data && data.length > 0 ?
+                        <>
+                        <Table>
+                            <TableHeader data={data} exclude={exclude} slug={slug}/>
+                            <TableBody data={data} slug={slug} exclude={exclude} />
+                        </Table>
+                        <Pagination slug={slug} meta={meta} />
+                        </>
+                        :
+                        <>
+                    <p>Nada Encontrado</p>
+                    <div onClick={() => router.back()}>
+                        <Button type="back" label="Voltar"/>        
+                    </div>
+                    </>
+                    
                 }
-                <Pagination meta={meta} api={process.env.NEXT_PUBLIC_API + slug} setItensFiltered={setItensFiltered}/>
+                
             </Section>
         )
     

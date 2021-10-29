@@ -15,5 +15,7 @@ const ToolsContainer = styled.div`
     display: flex;
     div {
         margin-right: .5rem;
+        min-width: 30px;
+        height: 30px;
     }
 `

@@ -77,6 +77,7 @@ const GlobalStyle = createGlobalStyle`
 html, body {
   min-height: 100%;
   height: 100%;
+
 }
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -104,6 +105,9 @@ time, mark, audio, video {
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
 	display: block;
+}
+html {
+  scroll-behavior: smooth;
 }
 body {
 	line-height: 1;

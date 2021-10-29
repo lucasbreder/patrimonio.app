@@ -2,8 +2,12 @@ import { useState } from "react"
 import styled from "styled-components"
 import nookies from 'nookies'
 import axios from "axios"
+import { useRouter } from "next/router"
+import Button from "./Button"
 
-export default function Pagination({ meta, api, setItensFiltered }) {
+export default function Pagination({ meta, api, setItensFiltered, slug }) {
+
+    const router = useRouter()
 
     const pages = []
 
@@ -14,40 +18,32 @@ export default function Pagination({ meta, api, setItensFiltered }) {
         pages.push(index) 
     }
 
-    async function pager(api, page) {
-        const cookies = nookies.get()
-
-        if (page > meta.last_page) {
-            page = 1
-        }
-
-        if (page < 1) {
-            page = meta.last_page
-        }
-        
-        const res = await axios.get(api+'?page='+page, {
-          headers: {
-            'Authorization': `bearer ${cookies.token}`
-          }
-        })
-        const resData = await res.data.data
-        
-        setItensFiltered(resData)
+    async function pager(page) {
+        router.query.page = page > 0 ? page : 1
+        router.push(router)
         setActivePage(page)
-        
+    }
+
+    async function showAll() {
+        router.query.perPage = 'all'
+        router.push(router)
     }
     if (meta) {
         return (
             <>
-            <Total>Total: {meta.total}</Total>
+                <Total>Total: {meta.total}</Total>
+                { pages.length > 1 &&
             <PagesContainer>
-                <PageNav onClick={() => {pager(api, activePage-1)}}> {'<'} </PageNav>
+            {router.query.page > 1 && <PageNav onClick={() => {pager(activePage-1)}}> {'<'} </PageNav>}
             {pages.map((page, index) => {
-                return <Pageitem className={activePage === page && 'active'} key={index} onClick={() => {pager(api, page)}}>{page}</Pageitem>
+                return <Pageitem className={activePage === page && 'active'} key={index} onClick={() => {pager(page)}}>{page}</Pageitem>
             })}
-                <PageNav onClick={() => {pager(api, activePage+1)}}> {'>'} </PageNav>
+                    {router.query.page < pages.length && <PageNav onClick={() => { pager(activePage + 1) }}> {'>'} </PageNav>}
+                    
             </PagesContainer>
-
+            
+                }
+                {pages.length > 1 && <Button type="submit" label="Ver Tudo" onClick={() => showAll()} />}
                 </>
         )
     } else {

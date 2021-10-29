@@ -6,7 +6,8 @@ export default function Notice({ status }) {
 
         const messages = {
             '200': 'Criada com sucesso',
-            '403': 'Sem permissão para essa ação'
+            '403': 'Sem permissão para essa ação',
+            '500': 'Ocorreu um erro no servidor'
         }
 
         return messages[statusMessage]

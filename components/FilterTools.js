@@ -4,13 +4,13 @@ import DateFilter from "./DateFilter";
 import Filter from "./Filter";
 import Search from "./Search";
 
-export default function FilterTools({ setItensFiltered, api, filterSet, dateFilterSet }) {
+export default function FilterTools({filter, dateFilter }) {
 
     return (
         <ToolsContainer>
-            {dateFilterSet && <DateFilter setItensFiltered={setItensFiltered} api={api} filterOptions={dateFilterSet} />}
-            <Search setItensFiltered={setItensFiltered} api={api}/>
-            {filterSet && <Filter setItensFiltered={setItensFiltered} api={api} filterOptions={filterSet} />}
+            {/* {dateFilter && <DateFilter />} */}
+            <Search />
+            <Filter />
         </ToolsContainer>
     )
 }
@@ -26,5 +26,6 @@ const ToolsContainer = styled.div`
     
     div {
         margin-right: .5rem;
+        cursor: pointer;
     }
 `

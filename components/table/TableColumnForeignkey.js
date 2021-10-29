@@ -24,7 +24,7 @@ export default function TableColumnForeignkey({ data, slug, title }) {
     }
     
     useEffect(() => {
-        getData()
+        data && getData()
     }, [])
 
     if (query && key) {
@@ -44,7 +44,11 @@ export default function TableColumnForeignkey({ data, slug, title }) {
             </td>
         )
     } else {
-        return <td><Loading/></td>
+        if (data) {
+            return <td><Loading/></td>
+        } else {
+            return <td></td>
+        }
     }
 
 

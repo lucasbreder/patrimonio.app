@@ -8,7 +8,6 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import ListTools from './ListTools'
 import { useRouter } from 'next/router'
-import filterSet from '../helpers/filterSet'
 import FilterTools from './FilterTools'
 import TableColumnGallery from './table/TableColumnGallery'
 import { BackgroundImage } from '../styles/mixins'
@@ -17,8 +16,6 @@ export default function ListImages({ data, slug }) {
     const router = useRouter()
 
     const [itensFiltered, setItensFiltered] = useState()
-
-    const elements = itensFiltered ? itensFiltered : data.length >= 0 ? data : [data]
 
     const parentItem = useRef(null)
 
@@ -30,9 +27,9 @@ export default function ListImages({ data, slug }) {
                 </Head>
                 <Title text={slug} />
                 <Button type='new' link={`/create/${slug}`} label='Adicionar' />
-                <FilterTools setItensFiltered={setItensFiltered} api={process.env.NEXT_PUBLIC_API + slug} filterSet={filterSet(slug)} />
+                <FilterTools />
                 <ListBoxContainer>
-                    {elements.map((item, index) => {
+                    {data.map((item, index) => {
                         return (
                             <ListBoxItem key={index} ref={parentItem}>
                                 <Image key={index} src={process.env.NEXT_PUBLIC_NAME_STORAGEBASEURL + item.path} />

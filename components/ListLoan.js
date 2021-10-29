@@ -11,7 +11,6 @@ import Moment from 'react-moment'
 import 'moment-timezone';
 import LoanStatus from './LoanStatus'
 import FilterTools from './FilterTools'
-import filterSet from '../helpers/filterSet'
 import dateFilterSet from '../helpers/dateFilterSet'
 import TableColumnTitleMobile from './table/TableColumnTitleMobile'
 
@@ -34,7 +33,7 @@ export default function ListLoan({ data, slug }) {
                 </Head>
                 <Title text={slug} />
                 <Button type='new' link={`/create/${slug}`} label='Adicionar' />
-                <FilterTools setItensFiltered={setItensFiltered} api={process.env.NEXT_PUBLIC_API + slug} filterSet={filterSet(slug)} dateFilterSet={dateFilterSet(slug)} />
+                <FilterTools />
                 <Table length={length}>
                     <TableHeader data={headers} exclude={exclude} />
                     <TableBodyContainer>
@@ -83,7 +82,7 @@ export default function ListLoan({ data, slug }) {
             <Section>
                 <Title text={slug} />
                 <Button type='new' link={`/create/${slug}`} label='Adicionar' />
-                <FilterTools setItensFiltered={setItensFiltered} api={process.env.NEXT_PUBLIC_API + slug} filterSet={filterSet(slug)} dateFilterSet={dateFilterSet(slug)} />
+                <FilterTools />
                 <p>Nada Encontrado</p>
             </Section>
 
